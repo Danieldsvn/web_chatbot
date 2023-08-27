@@ -3,7 +3,7 @@ import './App.css';
 
 function ChatbotApp() {
   const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState('');  
 
   const greetings = ["hello", "good", "i want"];
 
@@ -11,13 +11,13 @@ function ChatbotApp() {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
 
-    appendMessage('You', userMessage);
+    appendMessage('You:', userMessage);
 
     const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage));
    if (userWantsToTalk) {
     // Save conversation to database and perform other actions
     setTimeout(() => {      
-      appendMessage('Chatbot', 'Hello, User, enter with your credentials.');
+      appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
     }, "1000");  
     setUserInput('');
     return;
@@ -25,7 +25,7 @@ function ChatbotApp() {
 
     if (userMessage.toLowerCase().includes('loan')) {
     // Save conversation to database and perform other actions
-    appendMessage('Chatbot', `Type the number of the option to proceed`);
+    appendMessage('Chatbot:', `Click on the option`);
     loanOptions();
     setUserInput('');
     return;
@@ -33,7 +33,7 @@ function ChatbotApp() {
 
     if (userMessage.toLowerCase().includes('goodbye')) {
       // Save conversation to database and perform other actions
-      appendMessage('Chatbot', 'Goodbye! Conversation ended.');
+      appendMessage('Chatbot:', 'Goodbye! Conversation ended.');
       setUserInput('');
       return;
     }
@@ -53,17 +53,17 @@ function ChatbotApp() {
     
     const newMessage1 = {
       sender: '1',
-      content: option1,
+      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option1}</button>,
     };
 
     const newMessage2 = {
       sender: '2',
-      content: option2,
+      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option2}</button>,
     };
 
     const newMessage3 = {
       sender: '3',
-      content: option3,
+      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option3}</button>,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage1]);
     setMessages((prevMessages) => [...prevMessages, newMessage2]);
@@ -77,12 +77,55 @@ function ChatbotApp() {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
+  const handleLoanOptionClick = ({target}) => {
+    const option1 = 'Do you want to apply for a loan?'
+    const option2 = 'Loan conditions'
+    const option3 = 'Help'    
+
+    if(target.innerText === option1) {      
+      appendMessage('ChatBot:', 'Be aware if you can settle the debt in the future.');
+      const link = <a href="https://www.nerdwallet.com/uk/loans/personal-loans/tips-for-successfully-applying-for-a-loan/" target="_blank" rel="noreferrer">Click here for details</a>      
+
+      const newMessage = {
+        sender: 'ChatBot:',
+        content: link,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    }
+    
+    if(target.innerText === option2) {
+      appendMessage('ChatBot:', 'Know the loan terms.');
+      const link = <a href="https://www.investopedia.com/loan-terms-5075341" target="_blank" rel="noreferrer">Click here for details</a>      
+
+      const newMessage = {
+        sender: 'ChatBot:',
+        content: link,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    }
+
+    if(target.innerText === option3) {
+      appendMessage('ChatBot:', 'If you need help to know more about loan...');
+      const link = <a href="https://www.investopedia.com/terms/l/loan.asp" target="_blank" rel="noreferrer">Click here for details</a>      
+
+      const newMessage = {
+        sender: 'ChatBot:',
+        content: link,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    }
+    
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div key={index} className="message">
-            <strong>{message.sender}:</strong> {message.content}
+            <strong>{message.sender}</strong> {message.content}
           </div>
         ))}
       </div>
