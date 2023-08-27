@@ -13,7 +13,7 @@ function ChatbotApp() {
 
     appendMessage('You:', userMessage);
 
-    const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage));
+    const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
    if (userWantsToTalk) {
     // Save conversation to database and perform other actions
     setTimeout(() => {      
@@ -25,8 +25,10 @@ function ChatbotApp() {
 
     if (userMessage.toLowerCase().includes('loan')) {
     // Save conversation to database and perform other actions
-    appendMessage('Chatbot:', `Click on the option`);
-    loanOptions();
+    setTimeout(() => {
+      appendMessage('Chatbot:', `Click on the option below`);
+      loanOptions();
+    }, "1000")
     setUserInput('');
     return;
   }
