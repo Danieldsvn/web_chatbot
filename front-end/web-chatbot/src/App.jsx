@@ -38,7 +38,7 @@ function ChatbotApp() {
         setPasswordGetter(false);        
         setPassword(userInput);
         setUserLogged(true);
-        appendMessage('Chatbot:', username + ', tudo certo!');
+        appendMessage('Chatbot:', `${username}, you are logged in!`);
       } else {
         appendMessage('Chatbot:', 'Wrong password, try again!');
       }     
@@ -69,7 +69,7 @@ function ChatbotApp() {
   
       if (userMessage.toLowerCase().includes('goodbye')) {
         // Save conversation to database and perform other actions
-        appendMessage('Chatbot:', 'Goodbye! Conversation ended.');
+        appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
         setUserInput('');
         return;
       }
