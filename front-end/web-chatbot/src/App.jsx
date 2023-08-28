@@ -2,8 +2,17 @@ import { useState } from 'react';
 import './App.css';
 
 function ChatbotApp() {
+
+  const correctUsername = 'danieldsvn@gmail.com';
+  const correctPassword = '123456';
+
   const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState('');  
+  const [userInput, setUserInput] = useState(''); 
+  const [userLogged, setUserLogged] = useState(false);
+  const [usernameGetter, setUsernameGetter] = useState(false);  
+  const [passwordGetter, setPasswordGetter] = useState(false); 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const greetings = ["hello", "good", "i want"];
 
@@ -11,34 +20,61 @@ function ChatbotApp() {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
 
-    appendMessage('You:', userMessage);
+    appendMessage('You:', userMessage);    
+
+   if(usernameGetter) {        
+      if(userInput === correctUsername) {
+        setUsernameGetter(false);
+        appendMessage('Chatbot:', 'Type your password');
+        setUsername(userInput);
+        setPasswordGetter(true);
+      } else {
+        appendMessage('Chatbot:', 'Wrong username, try again!');
+      }     
+    }
+
+    if(passwordGetter) {     
+      if(userInput === correctPassword) {
+        setPasswordGetter(false);        
+        setPassword(userInput);
+        setUserLogged(true);
+        appendMessage('Chatbot:', username + ', tudo certo!');
+      } else {
+        appendMessage('Chatbot:', 'Wrong password, try again!');
+      }     
+    }
 
     const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
-   if (userWantsToTalk) {
+   if (userWantsToTalk && !userLogged) {
     // Save conversation to database and perform other actions
     setTimeout(() => {      
+      setUsernameGetter(true);    
       appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
-    }, "1000");  
+      appendMessage('Chatbot:', 'Type your username');
+      }, "1000");  
     setUserInput('');
     return;
     }
 
-    if (userMessage.toLowerCase().includes('loan')) {
-    // Save conversation to database and perform other actions
-    setTimeout(() => {
-      appendMessage('Chatbot:', `Click on the option below`);
-      loanOptions();
-    }, "1000")
-    setUserInput('');
-    return;
-  }
-
-    if (userMessage.toLowerCase().includes('goodbye')) {
+    if(userLogged) {
+      if (userMessage.toLowerCase().includes('loan')) {
       // Save conversation to database and perform other actions
-      appendMessage('Chatbot:', 'Goodbye! Conversation ended.');
+      setTimeout(() => {
+        appendMessage('Chatbot:', `Click on the option below`);
+        loanOptions();
+      }, "1000")
       setUserInput('');
       return;
     }
+  
+      if (userMessage.toLowerCase().includes('goodbye')) {
+        // Save conversation to database and perform other actions
+        appendMessage('Chatbot:', 'Goodbye! Conversation ended.');
+        setUserInput('');
+        return;
+      }
+    }
+
 
     // Implement logic to interpret other terms and generate appropriate responses
     // For simplicity, we'll just echo back the user's message for now
@@ -46,7 +82,7 @@ function ChatbotApp() {
 
     // appendMessage('Chatbot', botResponse);
     setUserInput('');
-  };
+  };  
 
   const loanOptions = () => {
     const option1 = ' Do you want to apply for a loan?'
