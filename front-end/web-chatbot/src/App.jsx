@@ -83,8 +83,11 @@ function ChatbotApp() {
       if (userMessage.toLowerCase().includes('goodbye')) {
         // Save conversation to database and perform other actions
         const conversationEndTime = formatDateTime();
+
         appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
         appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);
+        console.log(messages); // Send to database
+        // appendMessage('Chatbot:', `${conversationHistoric}`);
         setUserInput('');
         return;
       }
@@ -167,6 +170,10 @@ function ChatbotApp() {
     
   };
 
+  const handleHistoric = () => {
+    console.log("Open a page with historic and to be able to export in CSV ordered by date");
+  }
+
   return (
     <div className="chat-container">
       <div className="chat-messages" ref={chatMessagesRef}>
@@ -184,6 +191,7 @@ function ChatbotApp() {
           placeholder="Type your message..."
         />
         <button onClick={handleUserMessage}>Send</button>
+        <button onClick={handleHistoric}>Conversation historic</button>
       </div>
     </div>
   );
