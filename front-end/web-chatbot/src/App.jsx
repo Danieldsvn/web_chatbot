@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import formatDateTime from './helpers/currentDateGenerator';
 
 function ChatbotApp() {
 
@@ -13,8 +14,7 @@ function ChatbotApp() {
   const [userLogged, setUserLogged] = useState(false);
   const [usernameGetter, setUsernameGetter] = useState(false);  
   const [passwordGetter, setPasswordGetter] = useState(false); 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');  
 
   const greetings = ["hello", "good", "i want"];
 
@@ -59,8 +59,7 @@ function ChatbotApp() {
 
     if(passwordGetter) {     
       if(userInput === correctPassword) {
-        setPasswordGetter(false);        
-        setPassword(userInput);
+        setPasswordGetter(false);       
         setUserLogged(true);
         appendMessage('Chatbot:', `${username}, you are logged in!`);
       } else {
@@ -83,7 +82,9 @@ function ChatbotApp() {
     // End conversation flow
       if (userMessage.toLowerCase().includes('goodbye')) {
         // Save conversation to database and perform other actions
+        const conversationEndTime = formatDateTime();
         appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
+        appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);
         setUserInput('');
         return;
       }
