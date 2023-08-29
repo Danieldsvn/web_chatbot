@@ -24,14 +24,28 @@ function ChatbotApp() {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [messages]);
-
-
+  
+  
   const handleUserMessage = () => {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
-
+    
     appendMessage('You:', userMessage);    
+    
+    // User first interaction
+    const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
+   if (userWantsToTalk && !userLogged) {
+    
+    setTimeout(() => {      
+      setUsernameGetter(true);    
+      appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
+      appendMessage('Chatbot:', 'Type your username');
+      }, "1000");  
+    setUserInput('');
+    return;
+    }
 
+    // Login flow
    if(usernameGetter) {        
       if(userInput === correctUsername) {
         setUsernameGetter(false);
@@ -54,21 +68,10 @@ function ChatbotApp() {
       }     
     }
 
-    const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
-   if (userWantsToTalk && !userLogged) {
-    // Save conversation to database and perform other actions
-    setTimeout(() => {      
-      setUsernameGetter(true);    
-      appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
-      appendMessage('Chatbot:', 'Type your username');
-      }, "1000");  
-    setUserInput('');
-    return;
-    }
 
+    // User Looged flow
     if(userLogged) {
-      if (userMessage.toLowerCase().includes('loan')) {
-      // Save conversation to database and perform other actions
+      if (userMessage.toLowerCase().includes('loan')) {      
       setTimeout(() => {
         appendMessage('Chatbot:', `Click on the option below`);
         loanOptions();
@@ -76,7 +79,8 @@ function ChatbotApp() {
       setUserInput('');
       return;
     }
-  
+    
+    // End conversation flow
       if (userMessage.toLowerCase().includes('goodbye')) {
         // Save conversation to database and perform other actions
         appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
