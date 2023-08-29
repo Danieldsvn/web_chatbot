@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function ChatbotApp() {
+
+  const chatMessagesRef = useRef(null);
 
   const correctUsername = 'danieldsvn@gmail.com';
   const correctPassword = '123456';
@@ -15,6 +17,14 @@ function ChatbotApp() {
   const [password, setPassword] = useState('');
 
   const greetings = ["hello", "good", "i want"];
+
+  useEffect(() => {
+    // Scroll the chat to the bottom whenever messages are updated    
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  }, [messages]);
+
 
   const handleUserMessage = () => {
     const userMessage = userInput.trim();
@@ -74,13 +84,7 @@ function ChatbotApp() {
         return;
       }
     }
-
-
-    // Implement logic to interpret other terms and generate appropriate responses
-    // For simplicity, we'll just echo back the user's message for now
-    // const botResponse = userMessage;
-
-    // appendMessage('Chatbot', botResponse);
+    
     setUserInput('');
   };  
 
@@ -160,7 +164,7 @@ function ChatbotApp() {
 
   return (
     <div className="chat-container">
-      <div className="chat-messages">
+      <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((message, index) => (
           <div key={index} className="message">
             <strong>{message.sender}</strong> {message.content}
