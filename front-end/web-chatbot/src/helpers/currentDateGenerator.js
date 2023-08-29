@@ -13,5 +13,5 @@ export default function formatDateTime() {
   return formattedDateTime;
 }
 
-console.log(formatDateTime());
+
 
