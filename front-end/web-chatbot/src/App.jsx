@@ -3,13 +3,13 @@ import './App.css';
 import formatDateTime from './helpers/currentDateGenerator';
 
 function ChatbotApp() {
-
+  
   const chatMessagesRef = useRef(null);
 
   const correctUsername = 'danieldsvn@gmail.com';
   const correctPassword = '123456';
 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);  
   const [userInput, setUserInput] = useState(''); 
   const [userLogged, setUserLogged] = useState(false);
   const [usernameGetter, setUsernameGetter] = useState(false);  
