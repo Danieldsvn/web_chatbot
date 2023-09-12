@@ -17,6 +17,6 @@ services:
     ports: 
       - 3001:3001    
     volumes:
-      - ./back-end:/app-backend/
+      - ./back-end/:/app-backend/
 
 
