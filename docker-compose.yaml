@@ -18,5 +18,14 @@ services:
       - 3001:3001    
     volumes:
       - ./back-end/:/app-backend/
-
+    depends_on:
+      - database
+  database:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: mysql-container    
+    ports:
+      - 3306:3306
+    
 
