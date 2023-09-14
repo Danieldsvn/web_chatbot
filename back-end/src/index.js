@@ -5,14 +5,20 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-import create from './controllers/userController.js';
+import {
+  createController,
+  getByIdController,
+} from './controllers/userController.js';
+
 const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.post('/user', create);
+app.post('/user', createController);
+
+app.get('/user/:id', getByIdController);
 
 
 app.listen(port, () => {

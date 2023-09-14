@@ -10,3 +10,13 @@ export const createModel = async (data) => {
 
   return {id: result[0].insertId, name};
 };
+
+export const getByIdModel = async (id) => {
+  const result = await connection.execute(
+      'SELECT * FROM Chatbot.users WHERE id = ?',
+      [id],
+
+  );
+
+  return result[0][0];
+};
