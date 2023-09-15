@@ -1,8 +1,10 @@
-import {createModel, getByIdModel, getByName} from '../models/userModel.js';
+import {
+  createModel, getByIdModel, getByNameModel,
+} from '../models/userModel.js';
 
 /* eslint-disable require-jsdoc */
 export async function createService(data) {
-  const userExist = await getByName(data.name);
+  const userExist = await getByNameModel(data.name);
   if (userExist) {
     return {statusCode: 403, message: 'User already exists'};
   }

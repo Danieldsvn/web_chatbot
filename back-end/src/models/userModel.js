@@ -21,7 +21,7 @@ export const getByIdModel = async (id) => {
   return result[0][0];
 };
 
-export const getByName = async (name) => {
+export const getByNameModel = async (name) => {
   const result = await connection.execute(
       'SELECT * FROM Chatbot.users WHERE name = ?',
       [name],
