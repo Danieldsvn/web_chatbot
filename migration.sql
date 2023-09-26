@@ -11,4 +11,14 @@ CREATE TABLE users (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE chat_history (
+    id INT AUTO_INCREMENT,
+    user_id INT,    
+    timestamp TIMESTAMP,
+    chat_history TEXT
+    PRIMARY KEY(id)
+    FOREIGN KEY (user_id)
+      REFERENCES users (id)
+);
+
 SET SQL_SAFE_UPDATES = 0;
