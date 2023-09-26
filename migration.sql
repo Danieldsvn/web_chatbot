@@ -14,8 +14,8 @@ CREATE TABLE users (
 CREATE TABLE chat_history (
     id INT AUTO_INCREMENT,
     user_id INT,    
+    chat_history TEXT,
     timestamp TIMESTAMP,
-    chat_history TEXT
     PRIMARY KEY(id)
     FOREIGN KEY (user_id)
       REFERENCES users (id)
