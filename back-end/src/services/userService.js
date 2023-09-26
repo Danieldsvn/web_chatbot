@@ -1,15 +1,21 @@
+import {userValid} from '../helpers/dataValidation.js';
 import {
   createModel, getByIdModel, getByNameModel,
 } from '../models/userModel.js';
 
 /* eslint-disable require-jsdoc */
 export async function createService(data) {
-  const userExist = await getByNameModel(data.name);
-  if (userExist) {
-    return {statusCode: 403, message: 'User already exists'};
+  const dataValid = userValid(data);
+  if (dataValid == true) {
+    const userExist = await getByNameModel(data.name);
+    if (userExist) {
+      return {statusCode: 403, message: 'User already exists'};
+    }
+    const payLoad = await createModel(data);
+    return {statusCode: 201, payLoad: payLoad};
   }
-  const payLoad = await createModel(data);
-  return {statusCode: 201, payLoad: payLoad};
+
+  return dataValid;
 };
 
 export async function getByIdService(data) {
