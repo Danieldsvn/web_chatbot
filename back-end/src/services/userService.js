@@ -1,4 +1,4 @@
-import {userValid} from '../helpers/dataValidation.js';
+import {userValid} from '../helpers/userDataValidation.js';
 import {
   createModel, getByIdModel, getByNameModel,
 } from '../models/userModel.js';
