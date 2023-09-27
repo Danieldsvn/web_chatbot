@@ -12,11 +12,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE chat_history (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL auto_increment,
     user_id INT,    
     chat_history TEXT,
     timestamp TIMESTAMP,
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
     FOREIGN KEY (user_id)
       REFERENCES users (id)
 );

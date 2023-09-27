@@ -1,5 +1,7 @@
 /* eslint-disable require-jsdoc */
-import {createService} from '../services/chat-historyService';
+
+import {createService} from '../services/chatHistoryService.js';
+
 
 export async function createController(req, res) {
   const data = req.body;

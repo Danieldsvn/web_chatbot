@@ -10,6 +10,9 @@ import {
   getByIdController as userGetByIdController,
 } from './controllers/userController.js';
 
+import {createController as historyCreateController,
+} from './controllers/chatHistoryController.js';
+
 const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
@@ -20,7 +23,7 @@ app.post('/user', userCreateController);
 
 app.get('/user/:id', userGetByIdController);
 
-// app.post('/chat-history', createController);
+app.post('/chat-history', historyCreateController);
 
 
 app.listen(port, () => {

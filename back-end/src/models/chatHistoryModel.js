@@ -1,4 +1,4 @@
-import connection from './connection';
+import connection from './connection.js';
 
 export const createModel = async (data) => {
   const {userId, chatHistory} = data;
