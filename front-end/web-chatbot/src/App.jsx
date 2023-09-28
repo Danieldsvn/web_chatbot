@@ -86,8 +86,19 @@ function ChatbotApp() {
 
         appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
         appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);
-        console.log(messages); // Send to database
-        // appendMessage('Chatbot:', `${conversationHistoric}`);
+
+        const allMessages = [
+          ...messages,
+          { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
+          { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },
+        ];
+      
+        // Send to database
+        const conversationHistoric = allMessages.reduce((acc, message) => {
+          return `${acc}${message.sender} ${message.content}\n`;
+        }, "");          
+                
+        
         setUserInput('');
         return;
       }
