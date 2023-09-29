@@ -7,7 +7,8 @@ app.use(cors());
 app.use(express.json());
 
 import {
-  createController as userCreateController,
+  loginController,
+  createController as registerController,
   getByIdController as userGetByIdController,
 } from './controllers/userController.js';
 
@@ -20,7 +21,8 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.post('/user', userCreateController);
+app.post('/register', registerController);
+app.post('/login', loginController);
 
 app.get('/user/:id', userGetByIdController);
 

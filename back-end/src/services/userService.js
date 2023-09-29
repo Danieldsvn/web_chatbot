@@ -1,6 +1,6 @@
 import {userValid} from '../helpers/userDataValidation.js';
 import {
-  createModel, getByIdModel, getByNameModel,
+  createModel, getByIdModel, getByNameModel, loginModel,
 } from '../models/userModel.js';
 
 /* eslint-disable require-jsdoc */
@@ -16,6 +16,15 @@ export async function createService(data) {
   }
 
   return dataValid;
+};
+
+export async function loginService(data) {
+  const payLoad = await loginModel(data);
+  if (!payLoad) {
+    return {statusCode: 404, message: 'User not found or wrong password'};
+  }
+
+  return {statusCode: 200, payLoad: payLoad};
 };
 
 export async function getByIdService(data) {
