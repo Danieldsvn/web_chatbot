@@ -19,9 +19,13 @@ export async function createService(data) {
 };
 
 export async function loginService(data) {
+  const userExist = await getByNameModel(data.name);
+  if (!userExist) {
+    return {statusCode: 404, message: 'User not found'};
+  };
   const payLoad = await loginModel(data);
   if (!payLoad) {
-    return {statusCode: 404, message: 'User not found or wrong password'};
+    return {statusCode: 400, message: 'Wrong password'};
   }
 
   return {statusCode: 200, payLoad: payLoad};
