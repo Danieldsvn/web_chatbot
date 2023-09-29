@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import formatDateTime from './helpers/currentDateGenerator';
+import { fetchLogin } from './service/LoginService';
 
 function ChatbotApp() {
   
   const chatMessagesRef = useRef(null);
 
-  const correctUsername = 'danieldsvn@gmail.com';
-  const correctPassword = '123456';
+  const correctUsername = 'Daniel';
+  const correctPassword = '12345678';
 
   const [messages, setMessages] = useState([]);  
   const [userInput, setUserInput] = useState(''); 
@@ -26,7 +27,7 @@ function ChatbotApp() {
   }, [messages]);
   
   
-  const handleUserMessage = () => {
+  const handleUserMessage = async () => {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
     
@@ -58,9 +59,11 @@ function ChatbotApp() {
     }
 
     if(passwordGetter) {     
-      if(userInput === correctPassword) {
+      if(userInput === correctPassword) {        
         setPasswordGetter(false);       
         setUserLogged(true);
+        // conexão com o back-end ok, falta implementar lógica de login
+        await fetchLogin(username, userInput);
         appendMessage('Chatbot:', `${username}, you are logged in!`);
       } else {
         appendMessage('Chatbot:', 'Wrong password, try again!');
