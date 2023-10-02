@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import formatDateTime from './helpers/currentDateGenerator';
 import { fetchLogin } from './service/LoginService';
-import { fetchChatHistory } from './service/ChatHistoryService';
+import { fetchChatHistory, getChatHistory } from './service/ChatHistoryService';
 
 function ChatbotApp() {
   
@@ -185,8 +185,22 @@ function ChatbotApp() {
     
   };
 
-  const handleHistoric = () => {
-    console.log("Open a page with historic and to be able to export in CSV ordered by date");
+  const handleHistoric = async() => {
+    const { id } = JSON.parse(localStorage.getItem('user'));     
+
+    const histories = await getChatHistory(id);
+
+    console.log(histories);
+
+    // Convert in objects array.
+    const historiesObjects = histories.map((history) => {
+      return history.split('\n').filter(Boolean).map((line) => {
+        const [sender, content] = line.split(': ');
+        return { sender, content };
+    })
+    });
+    
+    console.log(historiesObjects);
   }
 
   return (

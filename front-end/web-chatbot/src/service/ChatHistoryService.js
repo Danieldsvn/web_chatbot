@@ -24,3 +24,13 @@ export const fetchChatHistory = async (userId, conversation) => {
     console.error(error);
   }
 };
+
+export const getChatHistory = async (id) => {  
+  try {
+    const response = await fetch(`http://localhost:3001/chat-history/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

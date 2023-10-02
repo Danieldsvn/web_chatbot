@@ -19,6 +19,14 @@ export async function getByIdService(data) {
   if (!payLoad) {
     return {statusCode: 404, message: 'User not found'};
   }
+  if (payLoad.length === 0) {
+    return {statusCode: 404, message: 'No conversation stored'};
+  }
 
-  return {statusCode: 200, payLoad: payLoad};
+
+  const payLoadTreated = payLoad.map((conversation) => {
+    return conversation.chat_history;
+  });
+
+  return {statusCode: 200, payLoad: payLoadTreated};
 };
