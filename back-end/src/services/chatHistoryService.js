@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {chatValid} from '../helpers/chatHistoryDataValidation.js';
-import {createModel} from '../models/chatHistoryModel.js';
+import {createModel, getByIdModel} from '../models/chatHistoryModel.js';
 
 export async function createService(data) {
   const chatOk = await chatValid(data);
@@ -12,4 +12,13 @@ export async function createService(data) {
     return {statusCode: 201, payLoad: payLoad};
   }
   return chatOk;
+};
+
+export async function getByIdService(data) {
+  const payLoad = await getByIdModel(data);
+  if (!payLoad) {
+    return {statusCode: 404, message: 'User not found'};
+  }
+
+  return {statusCode: 200, payLoad: payLoad};
 };

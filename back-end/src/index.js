@@ -12,7 +12,9 @@ import {
   getByIdController as userGetByIdController,
 } from './controllers/userController.js';
 
-import {createController as historyCreateController,
+import {
+  createController as historyCreateController,
+  getByIdController as historyGetByIdController,
 } from './controllers/chatHistoryController.js';
 
 const port = process.env.PORT || 3001;
@@ -27,6 +29,7 @@ app.post('/login', loginController);
 app.get('/user/:id', userGetByIdController);
 
 app.post('/chat-history', historyCreateController);
+app.get('/chat-history/:id', historyGetByIdController);
 
 
 app.listen(port, () => {
