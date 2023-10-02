@@ -14,10 +14,11 @@ export const createModel = async (data) => {
 
 export const getByIdModel = async (id) => {
   const result = await connection.execute(
-      'SELECT chat_history FROM Chatbot.chat_history WHERE user_id = ?',
+      // eslint-disable-next-line max-len
+      'SELECT chat_history FROM Chatbot.chat_history WHERE user_id = ? ORDER BY timestamp',
       [id],
 
   );
-    console.log('getByIdModel da ChathHstoryModel');
+
   return result[0];
 };
