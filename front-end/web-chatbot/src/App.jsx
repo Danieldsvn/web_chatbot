@@ -2,13 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import formatDateTime from './helpers/currentDateGenerator';
 import { fetchLogin } from './service/LoginService';
+import { fetchChatHistory } from './service/ChatHistoryService';
 
 function ChatbotApp() {
   
-  const chatMessagesRef = useRef(null);
-
-  const correctUsername = 'Daniel';
-  const correctPassword = '12345678';
+  const chatMessagesRef = useRef(null);  
 
   const [messages, setMessages] = useState([]);  
   const [userInput, setUserInput] = useState(''); 
@@ -62,6 +60,7 @@ function ChatbotApp() {
         appendMessage('Chatbot:', 'Type your username');
       }    
       if(userData.name) {
+        localStorage.setItem('user', JSON.stringify(userData));
         setUserLogged(true);
         setUsernameGetter(false);
         setPasswordGetter(false);
@@ -69,19 +68,6 @@ function ChatbotApp() {
       }      
     }
     }
-
-    // if(passwordGetter) {     
-    //   if(userInput === correctPassword) {        
-    //     setPasswordGetter(false);       
-    //     setUserLogged(true);
-    //     // conexão com o back-end ok, falta implementar lógica de login
-    //     const userData = await fetchLogin(username, userInput);
-    //     appendMessage('Chatbot:', `${username}, you are logged in!`);
-    //   } else {
-    //     appendMessage('Chatbot:', 'Wrong password, try again!');
-    //   }     
-    // }
-
 
     // User Looged flow
     if(userLogged) {
@@ -111,8 +97,11 @@ function ChatbotApp() {
         // Send to database
         const conversationHistoric = allMessages.reduce((acc, message) => {
           return `${acc}${message.sender} ${message.content}\n`;
-        }, "");          
-                
+        }, "");        
+        
+        const { id } = JSON.parse(localStorage.getItem('user'));        
+
+        await fetchChatHistory(id, conversationHistoric);                
         
         setUserInput('');
         return;
