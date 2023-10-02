@@ -47,28 +47,40 @@ function ChatbotApp() {
     }
 
     // Login flow
-   if(usernameGetter) {        
-      if(userInput === correctUsername) {
+   if(usernameGetter) {   
+    if(!passwordGetter) {
+      setUsername(userInput);
+      appendMessage('Chatbot:', 'Type your password');        
+      setPasswordGetter(true);
+    }     
+    if(passwordGetter) {
+      const userPassword = userInput;
+      const userData = await fetchLogin(username, userPassword);
+      if(userData.message) {
+        setPasswordGetter(false);
+        appendMessage('Chatbot:', `${userData.message}`);
+        appendMessage('Chatbot:', 'Type your username');
+      }    
+      if(userData.name) {
+        setUserLogged(true);
         setUsernameGetter(false);
-        appendMessage('Chatbot:', 'Type your password');
-        setUsername(userInput);
-        setPasswordGetter(true);
-      } else {
-        appendMessage('Chatbot:', 'Wrong username, try again!');
-      }     
+        setPasswordGetter(false);
+        appendMessage('Chatbot:', `${userData.name}, you are logged in!`);
+      }      
+    }
     }
 
-    if(passwordGetter) {     
-      if(userInput === correctPassword) {        
-        setPasswordGetter(false);       
-        setUserLogged(true);
-        // conexão com o back-end ok, falta implementar lógica de login
-        await fetchLogin(username, userInput);
-        appendMessage('Chatbot:', `${username}, you are logged in!`);
-      } else {
-        appendMessage('Chatbot:', 'Wrong password, try again!');
-      }     
-    }
+    // if(passwordGetter) {     
+    //   if(userInput === correctPassword) {        
+    //     setPasswordGetter(false);       
+    //     setUserLogged(true);
+    //     // conexão com o back-end ok, falta implementar lógica de login
+    //     const userData = await fetchLogin(username, userInput);
+    //     appendMessage('Chatbot:', `${username}, you are logged in!`);
+    //   } else {
+    //     appendMessage('Chatbot:', 'Wrong password, try again!');
+    //   }     
+    // }
 
 
     // User Looged flow

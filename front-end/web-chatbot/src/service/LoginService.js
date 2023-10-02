@@ -16,11 +16,11 @@ export const fetchLogin = async (name, password) => {
     const response = await fetch('http://localhost:3001/login', options);
     if (response.status === statusOk) {
       const data = await response.json();
-      console.log(data);
+      return data;
     }
     if (response.status === notFound || response.status == badRequest) {      
       const data = await response.json();
-      console.log(data);
+      return data;
     }
   } catch (error) {
     console.error(error);
