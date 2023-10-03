@@ -191,16 +191,6 @@ function ChatbotApp() {
     const histories = await getChatHistory(id);
 
     console.log(histories);
-
-    // Convert in objects array.
-    const historiesObjects = histories.map((history) => {
-      return history.split('\n').filter(Boolean).map((line) => {
-        const [sender, content] = line.split(': ');
-        return { sender, content };
-    })
-    });
-    
-    console.log(historiesObjects);
   }
 
   return (
