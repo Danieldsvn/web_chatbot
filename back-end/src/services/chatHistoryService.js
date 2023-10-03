@@ -35,7 +35,6 @@ export async function getByIdService(data) {
     return Papa.unparse(conversation);
   });
 
-  console.log(arrayCSV);
   return {statusCode: 200, payLoad: arrayCSV};
 };
 
