@@ -11,5 +11,10 @@ export default defineConfig({
     host: true,
     strictPort: true,
     port: 5173,
-  }
+  },
+  resolve: {
+    alias: {
+      'react-router-dom': 'react-router-dom',
+    },
+  },
 })
