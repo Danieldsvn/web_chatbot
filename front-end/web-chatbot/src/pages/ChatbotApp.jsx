@@ -41,6 +41,8 @@ function ChatbotApp() {
    if (userWantsToTalk && !userLogged) {
     
     setTimeout(() => {      
+      setMessages([]);
+      appendMessage('You:', userMessage);
       setUsernameGetter(true);    
       appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
       appendMessage('Chatbot:', 'Type your username');
@@ -109,6 +111,7 @@ function ChatbotApp() {
         await fetchChatHistory(id, conversationHistoric);                
         
         setUserInput('');
+        setUserLogged(false);
         return;
       }
     }
