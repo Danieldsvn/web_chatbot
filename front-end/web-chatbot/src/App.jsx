@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import './App.css';
 import formatDateTime from './helpers/currentDateGenerator';
 import { fetchLogin } from './service/LoginService';
 import { fetchChatHistory, getChatHistory } from './service/ChatHistoryService';
+import MyContext from './context/Context';
 
 function ChatbotApp() {
   
+  const {setHistories} = useContext(MyContext)
+
   const chatMessagesRef = useRef(null);  
 
   const [messages, setMessages] = useState([]);  
@@ -188,9 +191,11 @@ function ChatbotApp() {
   const handleHistoric = async() => {
     const { id } = JSON.parse(localStorage.getItem('user'));     
 
-    const histories = await getChatHistory(id);
+    const userHistories = await getChatHistory(id);
 
-    console.log(histories);
+    setHistories(userHistories);
+
+    console.log(userHistories);
   }
 
   return (
