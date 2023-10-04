@@ -198,9 +198,7 @@ function ChatbotApp() {
 
     const userHistories = await getChatHistory(id);
 
-    setHistories(userHistories);
-
-    console.log(userHistories);
+    setHistories(userHistories);    
 
     navigate('/csv');
   }
