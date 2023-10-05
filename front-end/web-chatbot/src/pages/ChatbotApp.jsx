@@ -29,7 +29,7 @@ function ChatbotApp() {
     }
   }, [messages]);
   
-  
+  // Main function that handles all messages
   const handleUserMessage = async () => {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
@@ -100,9 +100,15 @@ function ChatbotApp() {
           { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
           { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },
         ];
-      
+       
+        const messagesFixedLinks = allMessages.map((message) => {         
+          if(message.string) return {sender: message.sender, content: message.string}
+          return message;       
+        });
+
+        
         // Send to database
-        const conversationHistoric = allMessages.reduce((acc, message) => {
+        const conversationHistoric = messagesFixedLinks.reduce((acc, message) => {
           return `${acc}${message.sender} ${message.content}\n`;
         }, "");        
         
@@ -120,23 +126,26 @@ function ChatbotApp() {
   };  
 
   const loanOptions = () => {
-    const option1 = ' Do you want to apply for a loan?'
-    const option2 = ' Loan conditions'
-    const option3 = ' Help'
+    const option1 = 'Do you want to apply for a loan?'
+    const option2 = 'Loan conditions'
+    const option3 = 'Help'
     
     const newMessage1 = {
-      sender: '1',
+      sender: '1:',
       content: <button onClick={(e) => handleLoanOptionClick(e)}>{option1}</button>,
+      string: option1,
     };
 
     const newMessage2 = {
-      sender: '2',
+      sender: '2:',
       content: <button onClick={(e) => handleLoanOptionClick(e)}>{option2}</button>,
+      string: option2,
     };
 
     const newMessage3 = {
-      sender: '3',
+      sender: '3:',
       content: <button onClick={(e) => handleLoanOptionClick(e)}>{option3}</button>,
+      string: option3,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage1]);
     setMessages((prevMessages) => [...prevMessages, newMessage2]);
@@ -153,15 +162,17 @@ function ChatbotApp() {
   const handleLoanOptionClick = ({target}) => {
     const option1 = 'Do you want to apply for a loan?'
     const option2 = 'Loan conditions'
-    const option3 = 'Help'    
+    const option3 = 'Help' 
+    const clickHere = 'Click here for details';   
 
     if(target.innerText === option1) {      
       appendMessage('ChatBot:', 'Be aware if you can settle the debt in the future.');
-      const link = <a href="https://www.nerdwallet.com/uk/loans/personal-loans/tips-for-successfully-applying-for-a-loan/" target="_blank" rel="noreferrer">Click here for details</a>      
+      const link = <a href="https://www.nerdwallet.com/uk/loans/personal-loans/tips-for-successfully-applying-for-a-loan/" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
         sender: 'ChatBot:',
         content: link,
+        string: clickHere,
       };
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -169,11 +180,12 @@ function ChatbotApp() {
     
     if(target.innerText === option2) {
       appendMessage('ChatBot:', 'Know the loan terms.');
-      const link = <a href="https://www.investopedia.com/loan-terms-5075341" target="_blank" rel="noreferrer">Click here for details</a>      
+      const link = <a href="https://www.investopedia.com/loan-terms-5075341" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
         sender: 'ChatBot:',
         content: link,
+        string: clickHere,
       };
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -181,11 +193,12 @@ function ChatbotApp() {
 
     if(target.innerText === option3) {
       appendMessage('ChatBot:', 'If you need help to know more about loan...');
-      const link = <a href="https://www.investopedia.com/terms/l/loan.asp" target="_blank" rel="noreferrer">Click here for details</a>      
+      const link = <a href="https://www.investopedia.com/terms/l/loan.asp" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
         sender: 'ChatBot:',
         content: link,
+        string: clickHere,
       };
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
