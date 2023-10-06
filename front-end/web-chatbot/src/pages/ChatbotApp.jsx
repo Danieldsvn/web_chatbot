@@ -24,7 +24,7 @@ function ChatbotApp() {
   const greetings = ["hello", "good", "i want"];  
 
   const appendInitialMessage = () => {
-    if (messages.length === 0) {
+    if(messages.length === 0) {
       setTimeout(() => {
         setMessages([
           ...messages,
@@ -124,6 +124,9 @@ function ChatbotApp() {
 
         appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
         appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);
+        setTimeout(() => {
+          appendMessage('Chatbot:', `To start a new conversation type "hello"`);
+        }, '2000');
 
         const allMessages = [
           ...messages,
@@ -147,9 +150,7 @@ function ChatbotApp() {
         
         setUserInput('');
         setUserLogged(false);
-        setTimeout(() => {
-          appendInitialMessage();
-        }, '1000');
+        
         return;
       }
     }
@@ -263,6 +264,12 @@ function ChatbotApp() {
     navigate('/csv');
   }
 
+  const handleEnterKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleUserMessage();
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-messages" ref={chatMessagesRef}>
@@ -277,6 +284,7 @@ function ChatbotApp() {
           type={passwordGetter ? 'password' : 'text'}
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
+          onKeyDown={handleEnterKeyPress}
           placeholder="Type your message..."
         />
         <button onClick={handleUserMessage}>Send</button>
