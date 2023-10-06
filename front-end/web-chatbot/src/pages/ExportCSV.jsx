@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import MyContext from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
+import '../styles/ExportCSV.css';
 
 function ExportCSV() {
   const {histories} = useContext(MyContext);  
