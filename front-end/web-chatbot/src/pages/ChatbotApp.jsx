@@ -202,7 +202,7 @@ function ChatbotApp() {
         sender: sender,
         content: hidePassword,
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);      
       return;
     }
     
@@ -210,8 +210,7 @@ function ChatbotApp() {
       sender: sender,
       content: message,
     };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-    
+    setMessages((prevMessages) => [...prevMessages, newMessage]);      
   };
 
   const handleLoanOptionLink = ({target}) => {
@@ -262,6 +261,7 @@ function ChatbotApp() {
   };
 
   const handleHistoricButton = async() => {
+    setChatConversation(messages);
     const { id } = JSON.parse(localStorage.getItem('user'));     
 
     const userHistories = await getChatHistory(id);
