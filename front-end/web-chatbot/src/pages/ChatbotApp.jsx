@@ -104,8 +104,7 @@ function ChatbotApp() {
         const messagesFixedLinks = allMessages.map((message) => {         
           if(message.string) return {sender: message.sender, content: message.string}
           return message;       
-        });
-
+        });        
         
         // Send to database
         const conversationHistoric = messagesFixedLinks.reduce((acc, message) => {
@@ -152,11 +151,26 @@ function ChatbotApp() {
     setMessages((prevMessages) => [...prevMessages, newMessage3]);
 }
   const appendMessage = (sender, message) => {
+    if (passwordGetter && sender === 'You:') {      
+      let hidePassword = '';
+      const numberOfAsterisks = message.length;
+      for(let i = 0; i < numberOfAsterisks; i++) {
+        hidePassword += '*';
+      }
+      const newMessage = {
+        sender: sender,
+        content: hidePassword,
+      };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      return;
+    }
+    
     const newMessage = {
       sender: sender,
       content: message,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+    
   };
 
   const handleLoanOptionClick = ({target}) => {
@@ -227,7 +241,7 @@ function ChatbotApp() {
       </div>
       <div className="input-container">
         <input
-          type="text"
+          type={passwordGetter ? 'password' : 'text'}
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Type your message..."
