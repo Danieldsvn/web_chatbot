@@ -9,7 +9,7 @@ import MyContext from '../context/Context';
 function ChatbotApp() {
   const navigate = useNavigate();
   
-  const {setHistories} = useContext(MyContext)
+  const {setHistories, setChatConversation, chatConversation} = useContext(MyContext)
 
   const chatMessagesRef = useRef(null);  
 
@@ -38,7 +38,8 @@ function ChatbotApp() {
   };
 
   useEffect(() => {    
-      appendInitialMessage();  
+      setMessages(chatConversation);
+      if(chatConversation.length === 0) return appendInitialMessage();  
   }, []);
 
   useEffect(() => {
@@ -101,7 +102,7 @@ function ChatbotApp() {
         }, '750');
         setTimeout(() => {
           appendMessage('Chatbot:', `Type 'loan' for more information or type 'goodbye' to end this conversation`);          
-        }, '2000');
+        }, '1500');
       }      
     }
     }
@@ -121,18 +122,24 @@ function ChatbotApp() {
       if (userMessage.toLowerCase().includes('goodbye')) {
         // Save conversation to database and perform other actions
         const conversationEndTime = formatDateTime();
-
-        appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);
-        appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);
+        setTimeout(() => {
+          appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);          
+        }, '750');
+        setTimeout(() => {
+          appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);          
+        }, '1500');
         setTimeout(() => {
           appendMessage('Chatbot:', `To start a new conversation type "hello"`);
-        }, '2000');
+        }, '2500');
 
         const allMessages = [
           ...messages,
           { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
           { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },
+          { sender: 'Chatbot:', content: `To start a new conversation type "hello"` },
         ];
+
+        setChatConversation(allMessages);
        
         const messagesFixedLinks = allMessages.map((message) => {         
           if(message.string) return {sender: message.sender, content: message.string}
