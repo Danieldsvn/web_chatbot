@@ -19,18 +19,39 @@ function ChatbotApp() {
   const [usernameGetter, setUsernameGetter] = useState(false);  
   const [passwordGetter, setPasswordGetter] = useState(false); 
   const [username, setUsername] = useState('');  
+  
 
-  const greetings = ["hello", "good", "i want"];
+  const greetings = ["hello", "good", "i want"];  
+
+  const appendInitialMessage = () => {
+    if (messages.length === 0) {
+      setTimeout(() => {
+        setMessages([
+          ...messages,
+          {
+            sender: 'Chatbot:',
+            content: 'Hello, User, type "hello" to start a conversation',
+          },
+        ]);        
+      }, '1000');
+    }
+  };
+
+  useEffect(() => {    
+      appendInitialMessage();  
+  }, []);
 
   useEffect(() => {
-    // Scroll the chat to the bottom whenever messages are updated    
+    // Scroll the chat to the bottom whenever messages are updated        
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
-    }
+    }    
   }, [messages]);
   
   // Main function that handles all messages
   const handleUserMessage = async () => {
+
+
     const userMessage = userInput.trim();
     if (userMessage === '') return;
     
@@ -40,13 +61,15 @@ function ChatbotApp() {
     const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
    if (userWantsToTalk && !userLogged) {
     
-    setTimeout(() => {      
-      setMessages([]);
+    setTimeout(() => {  
+      setMessages([]);      
       appendMessage('You:', userMessage);
       setUsernameGetter(true);    
       appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
-      appendMessage('Chatbot:', 'Type your username');
-      }, "1000");  
+    }, "750");  
+    setTimeout(() => {
+        appendMessage('Chatbot:', 'Type your username');        
+      }, '2000');
     setUserInput('');
     return;
     }
@@ -55,7 +78,9 @@ function ChatbotApp() {
    if(usernameGetter) {   
     if(!passwordGetter) {
       setUsername(userInput);
-      appendMessage('Chatbot:', 'Type your password');        
+      setTimeout(() => {
+        appendMessage('Chatbot:', 'Type your password');       
+      }, '750');
       setPasswordGetter(true);
     }     
     if(passwordGetter) {
@@ -71,7 +96,12 @@ function ChatbotApp() {
         setUserLogged(true);
         setUsernameGetter(false);
         setPasswordGetter(false);
-        appendMessage('Chatbot:', `${userData.name}, you are logged in!`);
+        setTimeout(() => {
+          appendMessage('Chatbot:', `${userData.name}, you are logged in!`);          
+        }, '750');
+        setTimeout(() => {
+          appendMessage('Chatbot:', `Type 'loan' for more information or type 'goodbye' to end this conversation`);          
+        }, '2000');
       }      
     }
     }
@@ -81,7 +111,7 @@ function ChatbotApp() {
       if (userMessage.toLowerCase().includes('loan')) {      
       setTimeout(() => {
         appendMessage('Chatbot:', `Click on the option below`);
-        loanOptions();
+        loanChatOptions();
       }, "1000")
       setUserInput('');
       return;
@@ -117,6 +147,9 @@ function ChatbotApp() {
         
         setUserInput('');
         setUserLogged(false);
+        setTimeout(() => {
+          appendInitialMessage();
+        }, '1000');
         return;
       }
     }
@@ -124,26 +157,26 @@ function ChatbotApp() {
     setUserInput('');
   };  
 
-  const loanOptions = () => {
+  const loanChatOptions = () => {
     const option1 = 'Do you want to apply for a loan?'
     const option2 = 'Loan conditions'
     const option3 = 'Help'
     
     const newMessage1 = {
       sender: '1:',
-      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option1}</button>,
+      content: <button onClick={(e) => handleLoanOptionLink(e)}>{option1}</button>,
       string: option1,
     };
 
     const newMessage2 = {
       sender: '2:',
-      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option2}</button>,
+      content: <button onClick={(e) => handleLoanOptionLink(e)}>{option2}</button>,
       string: option2,
     };
 
     const newMessage3 = {
       sender: '3:',
-      content: <button onClick={(e) => handleLoanOptionClick(e)}>{option3}</button>,
+      content: <button onClick={(e) => handleLoanOptionLink(e)}>{option3}</button>,
       string: option3,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage1]);
@@ -173,7 +206,7 @@ function ChatbotApp() {
     
   };
 
-  const handleLoanOptionClick = ({target}) => {
+  const handleLoanOptionLink = ({target}) => {
     const option1 = 'Do you want to apply for a loan?'
     const option2 = 'Loan conditions'
     const option3 = 'Help' 
@@ -220,7 +253,7 @@ function ChatbotApp() {
     
   };
 
-  const handleHistoric = async() => {
+  const handleHistoricButton = async() => {
     const { id } = JSON.parse(localStorage.getItem('user'));     
 
     const userHistories = await getChatHistory(id);
@@ -247,7 +280,7 @@ function ChatbotApp() {
           placeholder="Type your message..."
         />
         <button onClick={handleUserMessage}>Send</button>
-        <button onClick={handleHistoric}>Conversation historic</button>
+        <button onClick={handleHistoricButton}>Conversation historic</button>
       </div>
     </div>
   );
