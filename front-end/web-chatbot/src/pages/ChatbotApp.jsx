@@ -9,7 +9,11 @@ import MyContext from '../context/Context';
 function ChatbotApp() {
   const navigate = useNavigate();
   
-  const {setHistories, setChatConversation, chatConversation} = useContext(MyContext)
+  const {
+    setHistories,    
+    chatParameters,
+    setChatParameters,
+  } = useContext(MyContext)
 
   const chatMessagesRef = useRef(null);  
 
@@ -38,8 +42,13 @@ function ChatbotApp() {
   };
 
   useEffect(() => {    
-      setMessages(chatConversation);
-      if(chatConversation.length === 0) return appendInitialMessage();  
+      const { messages, userLogged, username, usernameGetter, passwordGetter } = chatParameters;
+      setMessages(messages);
+      setUserLogged(userLogged);
+      setUsername(username);
+      setUsernameGetter(usernameGetter);
+      setPasswordGetter(passwordGetter);
+      if(messages.length === 0) return appendInitialMessage();  
   }, []);
 
   useEffect(() => {
@@ -139,7 +148,10 @@ function ChatbotApp() {
           { sender: 'Chatbot:', content: `To start a new conversation type "hello"` },
         ];
 
-        setChatConversation(allMessages);
+        setChatParameters({
+          ...chatParameters,
+          messages: allMessages,
+        });
        
         const messagesFixedLinks = allMessages.map((message) => {         
           if(message.string) return {sender: message.sender, content: message.string}
@@ -261,7 +273,13 @@ function ChatbotApp() {
   };
 
   const handleHistoricButton = async() => {
-    setChatConversation(messages);
+    setChatParameters({      
+      messages: messages,
+      userLogged: userLogged,
+      username: username,
+      usernameGetter: usernameGetter,
+      passwordGetter: passwordGetter,
+    });
     const { id } = JSON.parse(localStorage.getItem('user'));     
 
     const userHistories = await getChatHistory(id);

@@ -4,13 +4,23 @@ import MyContext from './Context.js';
 
 function Provider({ children }) {
   const [histories, setHistories] = useState([]);
-  const [chatConversation, setChatConversation] = useState([]);
+  const [chatConversation, setChatConversation] = useState([]);  
+  const [chatParameters, setChatParameters] = useState({
+    messages: [],
+    userLogged: false,
+    username: '',
+    usernameGetter: false,
+    passwordGetter: false,    
+  });
+
   
   const INITIAL_STATE = {
     histories,
     setHistories,    
     chatConversation,
     setChatConversation,
+    chatParameters,
+    setChatParameters,
   };
 
   return (
