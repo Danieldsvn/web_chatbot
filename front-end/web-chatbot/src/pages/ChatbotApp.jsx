@@ -312,8 +312,18 @@ function ChatbotApp() {
           onKeyDown={handleEnterKeyPress}
           placeholder="Type your message..."
         />
-        <button onClick={handleUserMessage}>Send</button>
-        <button onClick={handleHistoricButton}>Conversation historic</button>
+        <button 
+          onClick={handleUserMessage}
+          className="send-button"
+        >
+          Send
+        </button>
+        <button
+         onClick={handleHistoricButton}
+         className="historic-button"
+        >
+          Conversation historic
+        </button>
       </div>
     </div>
   );

@@ -33,13 +33,19 @@ function ExportCSV() {
             <button
               id={index}
               onClick={handleSaveCSV}
+              className="export-button"
             >
               Exports to CSV
             </button>
           </div>
         ))}
       </div>
-      <button onClick={() => navigate('/')}>Go to Chatbot</button>
+      <button
+       onClick={() => navigate('/')}
+       className="chatbot-button"
+      >
+        Go to Chatbot
+      </button>
     </div>
   );
 

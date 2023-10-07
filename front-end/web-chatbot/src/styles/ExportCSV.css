@@ -14,12 +14,14 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow-y: scroll;
+  height: 300px;
 }
 
 .csv-conversation {
   width: 300px;
   margin: 10px;
-  padding: 10px;
+  padding: 10px; 
   border: 1px solid #ccc;
   background-color: #f8f8f8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -41,13 +43,26 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
+  font-weight: 200;
   font-size: 16px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  border: 2px solid black;
+  
 }
 
 button:focus {
   outline: none;
+}
+
+.export-button {
+  background-color: lightblue;
+  color: black;
+  
+}
+
+.chatbot-button {
+  background-color: lightgreen;
+  color: black;
 }
