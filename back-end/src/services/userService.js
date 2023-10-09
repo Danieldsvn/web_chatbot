@@ -1,4 +1,5 @@
 import {userValid} from '../helpers/userDataValidation.js';
+import {PasswordCrypto} from '../helpers/PasswordCrypto.js';
 import {
   createModel, getByIdModel, getByNameModel, loginModel,
 } from '../models/userModel.js';
@@ -11,7 +12,10 @@ export async function createService(data) {
     if (userExist) {
       return {statusCode: 403, message: 'User already exists'};
     }
-    const payLoad = await createModel(data);
+    const passwordEncrypted = await PasswordCrypto.hashPassword(data.password);
+    const payLoad = await createModel({
+      name: data.name, password: passwordEncrypted,
+    });
     return {statusCode: 201, payLoad: payLoad};
   }
 
