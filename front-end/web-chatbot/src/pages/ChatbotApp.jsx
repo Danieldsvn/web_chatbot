@@ -145,7 +145,7 @@ function ChatbotApp() {
           ...messages,
           { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
           { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },
-          { sender: 'Chatbot:', content: `To start a new conversation type "hello"` },
+          // { sender: 'Chatbot:', content: `To start a new conversation type "hello"` },
         ];
 
         setChatParameters({
