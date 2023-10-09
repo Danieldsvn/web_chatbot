@@ -7,7 +7,7 @@ USE Chatbot;
 CREATE TABLE users (
   id INT NOT NULL auto_increment,
   name VARCHAR(30) NOT NULL,
-  password VARCHAR(30) NOT NULL,
+  password VARCHAR(100) NOT NULL,
   PRIMARY KEY(id)
 );
 

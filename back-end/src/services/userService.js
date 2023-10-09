@@ -27,10 +27,17 @@ export async function loginService(data) {
   if (!userExist) {
     return {statusCode: 404, message: 'User not found'};
   };
-  const payLoad = await loginModel(data);
-  if (!payLoad) {
+
+  const {verifyPassword} = PasswordCrypto;
+  const passwordMatch = await verifyPassword(data.password, userExist.password);
+
+  if (!passwordMatch) {
     return {statusCode: 400, message: 'Wrong password'};
   }
+  const payLoad = await loginModel(
+      {name: data.name,
+        password: userExist.password,
+      });
 
   return {statusCode: 200, payLoad: payLoad};
 };
