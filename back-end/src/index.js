@@ -16,6 +16,7 @@ import {
   createController as historyCreateController,
   getByIdController as historyGetByIdController,
 } from './controllers/chatHistoryController.js';
+import {ensureAuthenticated} from './middlewares/EnsureAuthenticated.js';
 
 const port = process.env.PORT || 3001;
 
@@ -26,10 +27,10 @@ app.get('/', (req, res) => {
 app.post('/register', registerController);
 app.post('/login', loginController);
 
-app.get('/user/:id', userGetByIdController);
+app.get('/user/:id', ensureAuthenticated, userGetByIdController);
 
-app.post('/chat-history', historyCreateController);
-app.get('/chat-history/:id', historyGetByIdController);
+app.post('/chat-history', ensureAuthenticated, historyCreateController);
+app.get('/chat-history/:id', ensureAuthenticated, historyGetByIdController);
 
 
 app.listen(port, () => {

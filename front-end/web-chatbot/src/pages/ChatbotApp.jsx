@@ -163,9 +163,9 @@ function ChatbotApp() {
           return `${acc}${message.sender} ${message.content}\n`;
         }, "");        
         
-        const { id } = JSON.parse(localStorage.getItem('user'));        
+        const { id, accessToken } = JSON.parse(localStorage.getItem('user'));        
 
-        await fetchChatHistory(id, conversationHistoric);                
+        await fetchChatHistory(id, conversationHistoric, accessToken);                
         
         setUserInput('');
         setUserLogged(false);
@@ -280,9 +280,9 @@ function ChatbotApp() {
       usernameGetter: usernameGetter,
       passwordGetter: passwordGetter,
     });
-    const { id } = JSON.parse(localStorage.getItem('user'));     
+    const { id, accessToken } = JSON.parse(localStorage.getItem('user'));     
 
-    const userHistories = await getChatHistory(id);
+    const userHistories = await getChatHistory(id, accessToken);
 
     setHistories(userHistories);    
 

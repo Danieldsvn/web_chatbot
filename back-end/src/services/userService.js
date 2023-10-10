@@ -3,6 +3,7 @@ import {PasswordCrypto} from '../helpers/PasswordCrypto.js';
 import {
   createModel, getByIdModel, getByNameModel, loginModel,
 } from '../models/userModel.js';
+import { JWTService } from '../helpers/JWTService.js';
 
 /* eslint-disable require-jsdoc */
 export async function createService(data) {
@@ -39,7 +40,12 @@ export async function loginService(data) {
         password: userExist.password,
       });
 
-  return {statusCode: 200, payLoad: payLoad};
+  const accessToken = JWTService.signIn({uid: payLoad.id});
+  if (accessToken === 'JWT_SECRET_NOT_FOUND') {
+    return {statusCode: 500, message: 'Error in generating access token'};
+  }
+
+  return {statusCode: 200, payLoad: {...payLoad, accessToken}};
 };
 
 export async function getByIdService(data) {
