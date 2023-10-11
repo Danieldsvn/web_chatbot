@@ -6,6 +6,7 @@ import { fetchLogin } from '../service/LoginService';
 import { fetchChatHistory, getChatHistory } from '../service/ChatHistoryService';
 import MyContext from '../context/Context';
 import Header from '../components/Header';
+import { fetchRegister } from '../service/RegisterService';
 
 function ChatbotApp() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function ChatbotApp() {
   const [userLogged, setUserLogged] = useState(false);
   const [usernameGetter, setUsernameGetter] = useState(false);  
   const [passwordGetter, setPasswordGetter] = useState(false); 
+  const [inRegister, setInRegister] = useState(false); 
   const [username, setUsername] = useState('');  
   
 
@@ -66,7 +68,8 @@ function ChatbotApp() {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
     
-    appendMessage('You:', userMessage);    
+    appendMessage('You:', userMessage);      
+   
     
     // User first interaction
     const userWantsToTalk = greetings.some((greeting) => (greeting === userMessage.toLowerCase()));
@@ -85,7 +88,7 @@ function ChatbotApp() {
     return;
     }
 
-    // Login flow
+    // Login/register flow
    if(usernameGetter) {   
     if(!passwordGetter) {
       setUsername(userInput);
@@ -95,14 +98,21 @@ function ChatbotApp() {
       setPasswordGetter(true);
     }     
     if(passwordGetter) {
+      let userData = {};
       const userPassword = userInput;
-      const userData = await fetchLogin(username, userPassword);
+      if(inRegister) {
+        // Faz fetchRegister
+        // Se registro deu certo faz setInRegister(false)
+        userData = await fetchRegister(username, userPassword);
+      } else if(!inRegister) {
+         userData = await fetchLogin(username, userPassword);
+      }
       if(userData.message) {
         setPasswordGetter(false);
         appendMessage('Chatbot:', `${userData.message}`);
         appendMessage('Chatbot:', 'Type your username');
       }    
-      if(userData.name) {
+      if(userData.accessToken) {
         localStorage.setItem('user', JSON.stringify(userData));
         setUserLogged(true);
         setUsernameGetter(false);
@@ -113,7 +123,21 @@ function ChatbotApp() {
         setTimeout(() => {
           appendMessage('Chatbot:', `Type 'loan' for more information or type 'goodbye' to end this conversation`);          
         }, '1500');
-      }      
+        setUserInput('');
+        return;
+      }
+      if(userData.name) {
+        // asd
+        setInRegister(false);
+        setUsernameGetter(false);
+        setPasswordGetter(false);
+        setTimeout(() => {
+          appendMessage('Chatbot:', `${userData.name}, you are registered!`);          
+        }, '750');
+        setTimeout(() => {
+          appendMessage('Chatbot:', 'Type "hello" to start a conversation');
+        }, '2000');
+      }     
     }
     }
 
@@ -300,6 +324,8 @@ function ChatbotApp() {
     <div className="chat-container">
       <Header
         appendMessage={appendMessage}
+        setInRegister={setInRegister}
+        setUsernameGetter={setUsernameGetter}
       />
       <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((message, index) => (

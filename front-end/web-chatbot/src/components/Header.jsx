@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 
 
-function Header({appendMessage}) {
+function Header({appendMessage, setInRegister, setUsernameGetter}) {
 
   const handleSignUpButton = () => {
+    setInRegister(true);
+    setUsernameGetter(true);
     appendMessage('Chatbot:', 'Let\'s register you');
     setTimeout(() => {
       appendMessage('Chatbot:', 'Type your username');      
@@ -24,7 +26,9 @@ function Header({appendMessage}) {
 
 
 Header.propTypes = {
-  appendMessage: PropTypes.func.isRequired
+  appendMessage: PropTypes.func.isRequired,
+  setInRegister: PropTypes.func.isRequired,
+  setUsernameGetter: PropTypes.func.isRequired,
 };
 
 export default Header;
