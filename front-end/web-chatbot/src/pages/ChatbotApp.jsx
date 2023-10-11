@@ -102,9 +102,7 @@ function ChatbotApp() {
     if(passwordGetter) {
       let userData = {};
       const userPassword = userInput;
-      if(inRegister) {
-        // Faz fetchRegister
-        // Se registro deu certo faz setInRegister(false)
+      if(inRegister) {       
         userData = await fetchRegister(username, userPassword);
       } else if(!inRegister) {
          userData = await fetchLogin(username, userPassword);
@@ -171,8 +169,7 @@ function ChatbotApp() {
         const allMessages = [
           ...messages,
           { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
-          { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },
-          // { sender: 'Chatbot:', content: `To start a new conversation type "hello"` },
+          { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },          
         ];
 
         setChatParameters({
@@ -194,8 +191,8 @@ function ChatbotApp() {
 
         await fetchChatHistory(id, conversationHistoric, accessToken);                
         
-        setUserInput('');
-        setUserLogged(false);        
+        setUserInput('');   
+        setUserLogged(false);             
         
         return;
       }

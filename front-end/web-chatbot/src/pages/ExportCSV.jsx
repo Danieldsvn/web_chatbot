@@ -26,7 +26,7 @@ function ExportCSV() {
     <div className='csv-page-container'>
       <h1>ExportCSV</h1>
       <div className='csv-all-conversations'>
-        {histories.map((history, index) => (
+        {histories.length > 0 ? histories.map((history, index) => (
           <div key={index} className='csv-conversation'>
             <h2>Conversation {index + 1}</h2>
             <p>{history}</p>
@@ -38,8 +38,8 @@ function ExportCSV() {
               Exports to CSV
             </button>
           </div>
-        ))}
-      </div>
+        )) : <h2>historic not found</h2> }
+      </div>      
       <button
        onClick={() => navigate('/')}
        className="chatbot-button"
