@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import '../styles/Header.css'
 
 
 function Header({appendMessage, setInRegister, setUsernameGetter}) {
@@ -13,7 +14,7 @@ function Header({appendMessage, setInRegister, setUsernameGetter}) {
   }
   return(
     <div className='chat-header'>
-      <h1>Header</h1>
+      <h1 className='chat-title'>Web Chatbot</h1>
       <button
         className='sign-up-button'
         onClick={handleSignUpButton}

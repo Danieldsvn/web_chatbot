@@ -1,0 +1,13 @@
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-title {
+  font-size:x-large ;
+}
+
+.sign-up-button {
+  margin: 10px;
+  background-color: antiquewhite;
+}
