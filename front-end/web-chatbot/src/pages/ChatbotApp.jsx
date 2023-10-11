@@ -5,6 +5,7 @@ import formatDateTime from '../helpers/currentDateGenerator';
 import { fetchLogin } from '../service/LoginService';
 import { fetchChatHistory, getChatHistory } from '../service/ChatHistoryService';
 import MyContext from '../context/Context';
+import Header from '../components/Header';
 
 function ChatbotApp() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function ChatbotApp() {
           ...messages,
           {
             sender: 'Chatbot:',
-            content: 'Hello, User, type "hello" to start a conversation',
+            content: 'Hello, User, type "hello" to login and start a conversation',
           },
         ]);        
       }, '1000');
@@ -297,6 +298,9 @@ function ChatbotApp() {
 
   return (
     <div className="chat-container">
+      <Header
+        appendMessage={appendMessage}
+      />
       <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((message, index) => (
           <div key={index} className="message">
