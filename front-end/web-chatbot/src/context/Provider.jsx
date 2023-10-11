@@ -10,7 +10,8 @@ function Provider({ children }) {
     userLogged: false,
     username: '',
     usernameGetter: false,
-    passwordGetter: false,    
+    passwordGetter: false,  
+    inRegister: false,  
   });
 
   

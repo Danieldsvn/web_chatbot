@@ -45,12 +45,13 @@ function ChatbotApp() {
   };
 
   useEffect(() => {    
-      const { messages, userLogged, username, usernameGetter, passwordGetter } = chatParameters;
+      const { messages, userLogged, username, usernameGetter, passwordGetter, inRegister } = chatParameters;
       setMessages(messages);
       setUserLogged(userLogged);
       setUsername(username);
       setUsernameGetter(usernameGetter);
       setPasswordGetter(passwordGetter);
+      setInRegister(inRegister);
       if(messages.length === 0) return appendInitialMessage();  
   }, []);
 
@@ -304,6 +305,7 @@ function ChatbotApp() {
       username: username,
       usernameGetter: usernameGetter,
       passwordGetter: passwordGetter,
+      inRegister: inRegister,
     });
     const { id, accessToken } = JSON.parse(localStorage.getItem('user'));     
 

@@ -1,13 +1,21 @@
 .chat-header {
   display: flex;
   justify-content: space-between;
+  border: 1px solid #cccccc;
+  background-color: rgb(6, 114, 153);
+  
 }
 
 .chat-title {
   font-size:x-large ;
+  margin-left: 5px;
+  color: rgb(255, 255, 255);
 }
 
 .sign-up-button {
   margin: 10px;
   background-color: antiquewhite;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  
 }
