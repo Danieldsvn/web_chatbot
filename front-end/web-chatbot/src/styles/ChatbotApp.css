@@ -34,6 +34,11 @@ button {
   padding: 5px 10px;   
 }
 
+button:disabled {
+  cursor:not-allowed;
+  background-color: gray;
+}
+
 .send-button {
   font-size: large;
   background-color: lightblue;

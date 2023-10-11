@@ -77,6 +77,7 @@ function ChatbotApp() {
    if (userWantsToTalk && !userLogged) {
     
     setTimeout(() => {  
+      localStorage.clear();
       setMessages([]);      
       appendMessage('You:', userMessage);
       setUsernameGetter(true);    
@@ -194,7 +195,7 @@ function ChatbotApp() {
         await fetchChatHistory(id, conversationHistoric, accessToken);                
         
         setUserInput('');
-        setUserLogged(false);
+        setUserLogged(false);        
         
         return;
       }
@@ -307,6 +308,7 @@ function ChatbotApp() {
       passwordGetter: passwordGetter,
       inRegister: inRegister,
     });
+    
     const { id, accessToken } = JSON.parse(localStorage.getItem('user'));     
 
     const userHistories = await getChatHistory(id, accessToken);
@@ -328,6 +330,8 @@ function ChatbotApp() {
         appendMessage={appendMessage}
         setInRegister={setInRegister}
         setUsernameGetter={setUsernameGetter}
+        userLogged={userLogged}
+        username={username}
       />
       <div className="chat-messages" ref={chatMessagesRef}>
         {messages.map((message, index) => (
@@ -344,13 +348,14 @@ function ChatbotApp() {
           onKeyDown={handleEnterKeyPress}
           placeholder="Type your message..."
         />
-        <button 
+        <button         
           onClick={handleUserMessage}
           className="send-button"
         >
           Send
         </button>
         <button
+          disabled={!userLogged}
          onClick={handleHistoricButton}
          className="historic-button"
         >
