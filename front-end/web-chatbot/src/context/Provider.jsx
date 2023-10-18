@@ -12,6 +12,7 @@ function Provider({ children }) {
     usernameGetter: false,
     passwordGetter: false,  
     inRegister: false,  
+    loginTries: 0,
   });
 
   

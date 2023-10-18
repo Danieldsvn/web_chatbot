@@ -26,6 +26,7 @@ function ChatbotApp() {
   const [passwordGetter, setPasswordGetter] = useState(false); 
   const [inRegister, setInRegister] = useState(false); 
   const [username, setUsername] = useState('');  
+  const [loginTries, setLoginTries] = useState(0);  
   
 
   const greetings = ["hello", "good", "i want"];  
@@ -45,13 +46,14 @@ function ChatbotApp() {
   };
 
   useEffect(() => {    
-      const { messages, userLogged, username, usernameGetter, passwordGetter, inRegister } = chatParameters;
+      const { messages, userLogged, username, usernameGetter, passwordGetter, inRegister, loginTries } = chatParameters;
       setMessages(messages);
       setUserLogged(userLogged);
       setUsername(username);
       setUsernameGetter(usernameGetter);
       setPasswordGetter(passwordGetter);
       setInRegister(inRegister);
+      setLoginTries(loginTries);
       if(messages.length === 0) return appendInitialMessage();  
   }, []);
 
@@ -109,14 +111,25 @@ function ChatbotApp() {
       }
       if(userData.message) {
         setPasswordGetter(false);
-        appendMessage('Chatbot:', `${userData.message}`);
-        appendMessage('Chatbot:', 'Type your username');
+        setTimeout(() => {          
+          appendMessage('Chatbot:', `${userData.message}`);
+        }, '750');
+        if(!inRegister) setLoginTries(loginTries + 1);
+        if(!inRegister && loginTries >= 3) {
+          setTimeout(() => {          
+            appendMessage('Chatbot:', 'If you aren\'t registered yet click in "SignUp" above');
+          }, '1250');
+        }
+        setTimeout(() => {          
+          appendMessage('Chatbot:', 'Type your username');
+        }, '2000');
       }    
       if(userData.accessToken) {
         localStorage.setItem('user', JSON.stringify(userData));
         setUserLogged(true);
         setUsernameGetter(false);
         setPasswordGetter(false);
+        setLoginTries(0);
         setTimeout(() => {
           appendMessage('Chatbot:', `${userData.name}, you are logged in!`);          
         }, '750');
@@ -192,7 +205,8 @@ function ChatbotApp() {
         await fetchChatHistory(id, conversationHistoric, accessToken);                
         
         setUserInput('');   
-        setUserLogged(false);             
+        setUserLogged(false);   
+        setLoginTries(0);          
         
         return;
       }
@@ -304,6 +318,7 @@ function ChatbotApp() {
       usernameGetter: usernameGetter,
       passwordGetter: passwordGetter,
       inRegister: inRegister,
+      loginTries: loginTries,
     });
     
     const { id, accessToken } = JSON.parse(localStorage.getItem('user'));     
