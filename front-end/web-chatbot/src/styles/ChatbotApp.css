@@ -19,6 +19,14 @@
   border: 1px solid #ccc;
 }
 
+.user-message {
+  background-color: rgba(164, 249, 165, 0.456);
+}
+
+.bot-message {
+  font-style: italic;
+}
+
 .input-container {
   display: flex;
   margin-top: 10px;  

@@ -347,11 +347,20 @@ function ChatbotApp() {
         username={username}
       />
       <div className="chat-messages" ref={chatMessagesRef}>
-        {messages.map((message, index) => (
-          <div key={index} className="message">
-            <strong>{message.sender}</strong> {message.content}
-          </div>
-        ))}
+      {messages.map((message, index) => (
+        <div key={index} className="message">
+          {message.sender === 'Chatbot:' ? (
+            <div className="bot-message">
+              <strong>{message.sender}</strong> {message.content}
+            </div>
+          ) : (
+            <div className="user-message">
+              <strong>{message.sender}</strong> {message.content}
+            </div>
+          )}
+        </div>
+      ))}
+
       </div>
       <div className="input-container">
         <input
