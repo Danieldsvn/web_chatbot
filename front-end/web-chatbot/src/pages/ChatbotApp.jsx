@@ -25,7 +25,7 @@ function ChatbotApp() {
   const [usernameGetter, setUsernameGetter] = useState(false);  
   const [passwordGetter, setPasswordGetter] = useState(false); 
   const [inRegister, setInRegister] = useState(false); 
-  const [username, setUsername] = useState('');  
+  const [username, setUsername] = useState('You');  
   const [loginTries, setLoginTries] = useState(0);  
   
 
@@ -71,7 +71,7 @@ function ChatbotApp() {
     const userMessage = userInput.trim();
     if (userMessage === '') return;
     
-    appendMessage('You:', userMessage);      
+    appendMessage(`${username}:`, userMessage);      
    
     
     // User first interaction
@@ -81,7 +81,7 @@ function ChatbotApp() {
     setTimeout(() => {  
       localStorage.clear();
       setMessages([]);      
-      appendMessage('You:', userMessage);
+      appendMessage(`${username}:`, userMessage);
       setUsernameGetter(true);    
       appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
     }, "750");  
@@ -206,7 +206,8 @@ function ChatbotApp() {
         
         setUserInput('');   
         setUserLogged(false);   
-        setLoginTries(0);          
+        setLoginTries(0);   
+        setUsername('You');       
         
         return;
       }
@@ -242,14 +243,14 @@ function ChatbotApp() {
     setMessages((prevMessages) => [...prevMessages, newMessage3]);
 }
   const appendMessage = (sender, message) => {
-    if (passwordGetter && sender === 'You:') {      
+    if (passwordGetter && sender === `${username}:`) {      
       let hidePassword = '';
       const numberOfAsterisks = message.length;
       for(let i = 0; i < numberOfAsterisks; i++) {
         hidePassword += '*';
       }
       const newMessage = {
-        sender: sender,
+        sender: 'You:',
         content: hidePassword,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);      

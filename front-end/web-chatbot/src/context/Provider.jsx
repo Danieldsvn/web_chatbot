@@ -8,7 +8,7 @@ function Provider({ children }) {
   const [chatParameters, setChatParameters] = useState({
     messages: [],
     userLogged: false,
-    username: '',
+    username: 'You',
     usernameGetter: false,
     passwordGetter: false,  
     inRegister: false,  
