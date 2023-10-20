@@ -256,9 +256,14 @@ function ChatbotApp() {
       setMessages((prevMessages) => [...prevMessages, newMessage]);      
       return;
     }
-    
+
+    let realSender = sender
+    if(realSender !== 'Chatbot:') {
+      if(!userLogged) realSender = 'You:';
+    }
+
     const newMessage = {
-      sender: sender,
+      sender: realSender,
       content: message,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage]);      
