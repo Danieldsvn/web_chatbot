@@ -47,6 +47,10 @@ button:disabled {
   background-color: gray;
 }
 
+.message button {
+  background-color: rgba(164, 249, 165, 0.456);
+}
+
 .send-button {
   font-size: large;
   background-color: lightblue;

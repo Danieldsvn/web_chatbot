@@ -28,7 +28,7 @@ function ChatbotApp() {
   const [username, setUsername] = useState('You');  
   const [loginTries, setLoginTries] = useState(0);  
   
-
+  const chatbot = 'Chatbot:';
   const greetings = ["hello", "good", "i want"];  
 
   const appendInitialMessage = () => {
@@ -37,7 +37,7 @@ function ChatbotApp() {
         setMessages([
           ...messages,
           {
-            sender: 'Chatbot:',
+            sender: chatbot,
             content: 'Hello, User, type "hello" to login and start a conversation',
           },
         ]);        
@@ -83,10 +83,10 @@ function ChatbotApp() {
       setMessages([]);      
       appendMessage(`${username}:`, userMessage);
       setUsernameGetter(true);    
-      appendMessage('Chatbot:', 'Hello, User, enter with your credentials.');
+      appendMessage(chatbot, 'Hello, User, enter with your credentials.');
     }, "750");  
     setTimeout(() => {
-        appendMessage('Chatbot:', 'Type your username');        
+        appendMessage(chatbot, 'Type your username');        
       }, '2000');
     setUserInput('');
     return;
@@ -97,7 +97,7 @@ function ChatbotApp() {
     if(!passwordGetter) {
       setUsername(userInput);
       setTimeout(() => {
-        appendMessage('Chatbot:', 'Type your password');       
+        appendMessage(chatbot, 'Type your password');       
       }, '750');
       setPasswordGetter(true);
     }     
@@ -112,16 +112,16 @@ function ChatbotApp() {
       if(userData.message) {
         setPasswordGetter(false);
         setTimeout(() => {          
-          appendMessage('Chatbot:', `${userData.message}`);
+          appendMessage(chatbot, `${userData.message}`);
         }, '750');
         if(!inRegister) setLoginTries(loginTries + 1);
         if(!inRegister && loginTries >= 3) {
           setTimeout(() => {          
-            appendMessage('Chatbot:', 'If you aren\'t registered yet click in "SignUp" above');
+            appendMessage(chatbot, 'If you aren\'t registered yet click in "SignUp" above');
           }, '1250');
         }
         setTimeout(() => {          
-          appendMessage('Chatbot:', 'Type your username');
+          appendMessage(chatbot, 'Type your username');
         }, '2000');
       }    
       if(userData.accessToken) {
@@ -131,10 +131,10 @@ function ChatbotApp() {
         setPasswordGetter(false);
         setLoginTries(0);
         setTimeout(() => {
-          appendMessage('Chatbot:', `${userData.name}, you are logged in!`);          
+          appendMessage(chatbot, `${userData.name}, you are logged in!`);          
         }, '750');
         setTimeout(() => {
-          appendMessage('Chatbot:', `Type 'loan' for more information or type 'goodbye' to end this conversation`);          
+          appendMessage(chatbot, `Type 'loan' for more information or type 'goodbye' to end this conversation`);          
         }, '1500');
         setUserInput('');
         return;
@@ -145,10 +145,10 @@ function ChatbotApp() {
         setUsernameGetter(false);
         setPasswordGetter(false);
         setTimeout(() => {
-          appendMessage('Chatbot:', `${userData.name}, you are registered!`);          
+          appendMessage(chatbot, `${userData.name}, you are registered!`);          
         }, '750');
         setTimeout(() => {
-          appendMessage('Chatbot:', 'Type "hello" to start a conversation');
+          appendMessage(chatbot, 'Type "hello" to start a conversation');
         }, '2000');
       }     
     }
@@ -158,7 +158,7 @@ function ChatbotApp() {
     if(userLogged) {
       if (userMessage.toLowerCase().includes('loan')) {      
       setTimeout(() => {
-        appendMessage('Chatbot:', `Click on the option below`);
+        appendMessage(chatbot, `Click on the option below`);
         loanChatOptions();
       }, "1000")
       setUserInput('');
@@ -170,19 +170,19 @@ function ChatbotApp() {
         // Save conversation to database and perform other actions
         const conversationEndTime = formatDateTime();
         setTimeout(() => {
-          appendMessage('Chatbot:', `Goodbye, ${username}! Conversation ended.`);          
+          appendMessage(chatbot, `Goodbye, ${username}! Conversation ended.`);          
         }, '750');
         setTimeout(() => {
-          appendMessage('Chatbot:', `Conversation user, ${username}! ${conversationEndTime}`);          
+          appendMessage(chatbot, `Conversation user, ${username}! ${conversationEndTime}`);          
         }, '1500');
         setTimeout(() => {
-          appendMessage('Chatbot:', `To start a new conversation type "hello"`);
+          appendMessage(chatbot, `To start a new conversation type "hello"`);
         }, '2500');
 
         const allMessages = [
           ...messages,
-          { sender: 'Chatbot:', content: `Goodbye, ${username}! Conversation ended.` },
-          { sender: 'Chatbot:', content: `Conversation user, ${username}! ${conversationEndTime}` },          
+          { sender: chatbot, content: `Goodbye, ${username}! Conversation ended.` },
+          { sender: chatbot, content: `Conversation user, ${username}! ${conversationEndTime}` },          
         ];
 
         setChatParameters({
@@ -258,7 +258,7 @@ function ChatbotApp() {
     }
 
     let realSender = sender
-    if(realSender !== 'Chatbot:') {
+    if(realSender !== chatbot) {
       if(!userLogged) realSender = 'You:';
     }
 
@@ -276,11 +276,11 @@ function ChatbotApp() {
     const clickHere = 'Click here for details';   
 
     if(target.innerText === option1) {      
-      appendMessage('ChatBot:', 'Be aware if you can settle the debt in the future.');
+      appendMessage(chatbot, 'Be aware if you can settle the debt in the future.');
       const link = <a href="https://www.nerdwallet.com/uk/loans/personal-loans/tips-for-successfully-applying-for-a-loan/" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
-        sender: 'ChatBot:',
+        sender: chatbot,
         content: link,
         string: clickHere,
       };
@@ -289,11 +289,11 @@ function ChatbotApp() {
     }
     
     if(target.innerText === option2) {
-      appendMessage('ChatBot:', 'Know the loan terms.');
+      appendMessage(chatbot, 'Know the loan terms.');
       const link = <a href="https://www.investopedia.com/loan-terms-5075341" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
-        sender: 'ChatBot:',
+        sender: chatbot,
         content: link,
         string: clickHere,
       };
@@ -302,11 +302,11 @@ function ChatbotApp() {
     }
 
     if(target.innerText === option3) {
-      appendMessage('ChatBot:', 'If you need help to know more about loan...');
+      appendMessage(chatbot, 'If you need help to know more about loan...');
       const link = <a href="https://www.investopedia.com/terms/l/loan.asp" target="_blank" rel="noreferrer">{clickHere}</a>      
 
       const newMessage = {
-        sender: 'ChatBot:',
+        sender: chatbot,
         content: link,
         string: clickHere,
       };
@@ -354,7 +354,7 @@ function ChatbotApp() {
       <div className="chat-messages" ref={chatMessagesRef}>
       {messages.map((message, index) => (
         <div key={index} className="message">
-          {message.sender === 'Chatbot:' ? (
+          {message.sender === chatbot ? (
             <div className="bot-message">
               <strong>{message.sender}</strong> {message.content}
             </div>
