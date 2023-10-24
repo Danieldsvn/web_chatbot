@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/ChatbotApp.css';
 import formatDateTime from '../helpers/currentDateGenerator';
 import { fetchLogin } from '../service/LoginService';
 import { fetchChatHistory, getChatHistory } from '../service/ChatHistoryService';
 import MyContext from '../context/Context';
 import Header from '../components/Header';
 import { fetchRegister } from '../service/RegisterService';
+import '../styles/ChatbotApp.css';
 
 function ChatbotApp() {
   const navigate = useNavigate();
