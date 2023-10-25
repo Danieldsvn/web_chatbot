@@ -81,6 +81,8 @@ function ChatbotApp() {
     setTimeout(() => {  
       localStorage.clear();
       setMessages([]);      
+      setInRegister(false);
+      setLoginTries(0);
       appendMessage(`${username}:`, userMessage);
       setUsernameGetter(true);    
       appendMessage(chatbot, 'Hello, User, enter with your credentials.');
