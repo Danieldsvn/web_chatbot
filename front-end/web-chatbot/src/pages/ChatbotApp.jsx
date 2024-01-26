@@ -117,7 +117,7 @@ function ChatbotApp() {
           appendMessage(chatbot, `${userData.message}`);
         }, '750');
         if(!inRegister) setLoginTries(loginTries + 1);
-        if(!inRegister && loginTries >= 3) {
+        if(!inRegister && loginTries >= 2) {
           setTimeout(() => {          
             appendMessage(chatbot, 'If you aren\'t registered yet click in "SignUp" above');
           }, '1250');
