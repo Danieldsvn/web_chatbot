@@ -12,15 +12,16 @@ h1 {
 
 .csv-all-conversations {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;  
+  flex-direction: column;
   justify-content: center;
   overflow-y: scroll;
   height: 300px;
 }
 
-.csv-conversation {
-  width: 300px;
-  margin: 10px;
+.csv-conversation {  
+  /* width: 300px; */
+  /* margin: 10px; */
   padding: 10px; 
   border: 1px solid #ccc;
   background-color: #f8f8f8;

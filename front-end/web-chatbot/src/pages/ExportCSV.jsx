@@ -26,10 +26,10 @@ function ExportCSV() {
     <div className='csv-page-container'>
       <h1>ExportCSV</h1>
       <div className='csv-all-conversations'>
-        {histories.length > 0 ? histories.map((history, index) => (
+        {histories.length > 0 ? histories.map((_history, index) => (
           <div key={index} className='csv-conversation'>
-            <h2>Conversation {index + 1}</h2>
-            <p>{history}</p>
+            <h4>Conversation {index + 1}</h4>
+            {/* <p>{history}</p> */}
             <button
               id={index}
               onClick={handleSaveCSV}
