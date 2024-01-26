@@ -16,7 +16,6 @@
 
 ## Como visualizar com docker-compose:
 
-* O projeto está em construção e não está disponível em deploy.
-Vá para a branch chatbot-docker. 
-Para executar o projeto faça o clone do repositório, na raiz do projeto execute no terminal o comando `docker-compose up -d`.
+* O projeto está em construção e não está disponível em deploy.  
+Para executar o projeto faça o clone do repositório vá para a branch *chatbot-docker*, na raiz do projeto execute no terminal o comando `docker-compose up -d`.  
 Para visualizar aplicação funcionando no navegador abra no seu navegador este [link](http://localhost:5173/)
